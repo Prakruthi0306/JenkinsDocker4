@@ -21,7 +21,7 @@ pipeline {
                     script {
                         def mvnHome = tool 'MAVEN_HOME'
                         withSonarQubeEnv() {
-                            bat "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Sonar"
+                            bat "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=mysql"
                         }
                     }
                 }
