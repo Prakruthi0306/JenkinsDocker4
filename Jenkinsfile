@@ -27,11 +27,7 @@ pipeline {
                 }
             }
             
-            stage('Test') {
-                steps {
-                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-                }
-            }
+         
             stage('Packaging') {
                 steps {
                     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
@@ -43,8 +39,8 @@ pipeline {
                     script{
                             def server = Artifactory.server 'Artifactory'
                             def rtMaven = Artifactory.newMavenBuild()
-                            //rtMaven.resolver server: server, releaseRepo: 'repo', snapshotRepo: 'snapshot'
-                            rtMaven.deployer server: server, releaseRepo: 'repo', snapshotRepo: 'snapshot'
+                            //rtMaven.resolver server: server, releaseRepo: 'JenkinsDocker', snapshotRepo: 'Jenkinssnapshot'
+                            rtMaven.deployer server: server, releaseRepo: 'JenkinsDocker', snapshotRepo: 'Jenkinssnapshot'
                             rtMaven.tool = 'MAVEN_HOME'
                             
                             def buildInfo = rtMaven.run pom: '$workspace/pom.xml', goals: 'clean install'
