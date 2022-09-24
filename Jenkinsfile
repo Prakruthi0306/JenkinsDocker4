@@ -33,7 +33,12 @@ pipeline {
                     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
                 }
             }
-            
+            stage('Docker compose'){
+                steps{
+   
+      step([$class: 'DockerComposeBuilder'])
+                }
+            }
             stage ("Artifactory Publish"){
                 steps{
                     script{
